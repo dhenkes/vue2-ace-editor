@@ -27,6 +27,10 @@ module.exports = {
     sync: {
       type: Boolean,
       default: false
+    },
+    options: {
+      type: Object,
+      default: {}
     }
   },
 
@@ -41,10 +45,12 @@ module.exports = {
     var lang = vm.lang;
     var theme = vm.theme;
     var editor = vm.editor = ace.edit(vm.$el);
+    var options = vm.options;
     editor.$blockScrolling = Infinity;
     editor.getSession().setMode('ace/mode/' + lang);
     editor.setTheme('ace/theme/' + theme);
     editor.setValue(vm.content, 1);
+    editor.setOptions(options);
     editor.on('change', function () {
       vm.$parent.$emit('editor-update', editor.getValue());
     });
