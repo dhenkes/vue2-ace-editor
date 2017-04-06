@@ -30,7 +30,7 @@ module.exports = {
     },
     options: {
       type: Object,
-      default: {}
+      default: function () { return []; }
     }
   },
 
