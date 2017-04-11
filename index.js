@@ -4,7 +4,7 @@ module.exports = {
   template: '<div :style="{height: height, width: width}"></div>',
 
   props: {
-    content: {
+    value: {
       type: String,
       required: true
     },
@@ -49,10 +49,11 @@ module.exports = {
     editor.$blockScrolling = Infinity;
     editor.getSession().setMode('ace/mode/' + lang);
     editor.setTheme('ace/theme/' + theme);
-    editor.setValue(vm.content, 1);
+    editor.setValue(vm.value, 1);
     editor.setOptions(options);
+
     editor.on('change', function () {
-      vm.$parent.$emit('editor-update', editor.getValue());
+      vm.$emit('input', editor.getValue());
     });
   },
 
