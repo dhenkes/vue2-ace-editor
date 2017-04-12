@@ -2,7 +2,9 @@ var ace = require('brace');
 
 module.exports = {
   template: '<div :style="{height: height, width: width}"></div>',
-
+  model: {
+    prop: 'content'
+  },
   props: {
     content: {
       type: String,
@@ -24,12 +26,8 @@ module.exports = {
       type: String,
       default: '100%'
     },
-    sync: {
-      type: Boolean,
-      default: false
-    },
-    options: {
-      type: Object,
+    options: {		
+      type: Object,		
       default: function () { return {}; }
     }
   },
@@ -37,6 +35,7 @@ module.exports = {
   data: function () {
     return {
       editor: null,
+      lastContent: ""
     };
   },
 
@@ -51,20 +50,23 @@ module.exports = {
     editor.setTheme('ace/theme/' + theme);
     editor.setValue(vm.content, 1);
     editor.setOptions(options);
+
     editor.on('change', function () {
+      vm.$emit('input', editor.getValue());
       vm.$parent.$emit('editor-update', editor.getValue());
+      vm.lastContent = vm.content;
     });
   },
 
   watch: {
-    content: function (newContent) {
+    content(newContent) {
       var vm = this;
-      if (vm.sync) {
+      if (vm.lastContent != newContent){
         vm.editor.setValue(newContent, 1);
       }
     },
 
-    theme: function (newTheme) {
+    theme(newTheme) {
       var vm = this;
       vm.editor.setTheme('ace/theme/' + newTheme);
     }
