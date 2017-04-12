@@ -58,11 +58,9 @@ module.exports = {
   },
 
   watch: {
-    content: function (newContent) {
+    value: function (newContent) {
       var vm = this;
-      if (vm.sync) {
-        vm.editor.setValue(newContent, 1);
-      }
+      vm.editor.setValue(newContent, 1);
     },
 
     theme: function (newTheme) {
