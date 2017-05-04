@@ -1,7 +1,9 @@
 var ace = require('brace');
 
 module.exports = {
-  template: '<div :style="{height: height, width: width}"></div>',
+  render: function (h) {
+    return h('div', {':style': "{height: height, width: width}"});
+  },
 
   props: {
     content: {
