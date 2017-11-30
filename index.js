@@ -31,6 +31,10 @@ module.exports = {
     options: {
       type: Object,
       default: function () { return {}; }
+    },
+    id: {
+      type: String,
+      default: null
     }
   },
 
@@ -52,7 +56,7 @@ module.exports = {
     editor.setValue(vm.content, 1);
     editor.setOptions(options);
     editor.on('change', function () {
-      vm.$parent.$emit('editor-update', editor.getValue());
+      vm.$parent.$emit('editor-update', editor.getValue(), vm.id);
     });
   },
 
